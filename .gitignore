@@ -1,0 +1,22 @@
+# Ignore local data, generated indexes, and secrets
+.env
+*.env
+__pycache__/
+.ipynb_checkpoints/
+.DS_Store
+
+# Raw manuals and generated artifacts should not be committed unless licensing is confirmed.
+data/raw/
+data/data/
+rag_project/
+*.pkl
+*.pickle
+*.sqlite3
+*.bin
+
+# Local vector stores
+*_vector_db/
+chroma/
+
+# Keep the full original assignment notebook local unless intentionally publishing it.
+notebooks/camera_manual_rag_original.ipynb
