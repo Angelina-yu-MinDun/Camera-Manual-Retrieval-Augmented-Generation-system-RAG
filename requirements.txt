@@ -1,0 +1,16 @@
+langchain
+langchain-community
+langchain-openai
+chromadb
+sentence-transformers
+pypdf
+unstructured[local-inference]
+unstructured-inference
+google-generativeai
+cohere
+rank-bm25
+pdf2image
+pytesseract
+pillow
+nltk
+ragas
