@@ -23,37 +23,60 @@ Camera manuals are long, technical, and difficult to search when users need a sp
 
 ```mermaid
 flowchart TD
-    A[Camera Manual PDFs] --> B[PDF Parsing]
-    B --> C[Text, Tables, and Image Elements]
-    C --> D[OCR for Image-Based Content]
-    C --> E[Text Extraction]
-    D --> F[Document Objects with Metadata]
-    E --> F
-    F --> G[Semantic Sentence-Based Chunking]
-    G --> H[Chunk Metadata: Model, Page, Type, ID]
-    H --> I[Embedding with intfloat/e5-base-v2]
-    I --> J[Chroma Vector Database]
+    subgraph IDX["Indexing & Embedding"]
+        A[Camera Manual PDFs]
+        B[PDF Parsing<br/>Tool: unstructured.partition_pdf]
+        C[Text, Tables, and Image Elements]
+        D[OCR for Image-Based Content<br/>Tool: pytesseract + PIL]
+        E[Text Extraction]
+        F[Document Objects with Metadata<br/>Tool: LangChain Document]
+        G[Semantic Sentence-Based Chunking<br/>Tool: NLTK sent_tokenize]
+        H[Chunk Metadata<br/>Model, Page, Type, ID]
+        I[Dense Embedding<br/>Tool: intfloat/e5-base-v2]
+        J[Vector Store<br/>Tool: ChromaDB]
+    end
 
-    K[User Question] --> L[Query Normalization]
-    L --> M[Query Rewriting with Gemini]
-    M --> N[Hybrid Retrieval]
-    J --> N
-    H --> O[BM25 Keyword Retriever]
-    J --> P[Vector Retriever]
-    O --> N
-    P --> N
-    M --> Q[HyDE Hypothetical Answer]
-    Q --> R[HyDE Vector Search]
+    subgraph RET["Retrieval"]
+        K[User Question]
+        L[Query Normalization<br/>Tool: custom aliases]
+        M[Query Rewriting<br/>Tool: Gemini 2.0 Flash]
+        O[BM25 Keyword Retriever<br/>Tool: BM25Retriever]
+        P[Vector Retriever<br/>Tool: Chroma retriever]
+        N[Hybrid Retrieval<br/>Tool: EnsembleRetriever]
+        Q[HyDE Hypothetical Answer<br/>Tool: Gemini 2.0 Flash]
+        R[HyDE Vector Search]
+        S[Merge and Deduplicate Contexts]
+        T[Rerank Contexts<br/>Tool: Cohere Rerank]
+        U[Model/Page Filtering and Fallback Logic]
+    end
+
+    subgraph GEN["Generation"]
+        V[Context Blocks Grouped by Camera Model]
+        W[Answer Generation<br/>Tool: Gemini 2.0 Flash]
+        X[Answer Verification and Refinement<br/>Tool: Gemini 2.0 Flash]
+        Y[Final Answer with Retrieved Evidence]
+    end
+
+    subgraph EVAL["Evaluation"]
+        Z[RAGAS Evaluation<br/>Metrics: Faithfulness, Answer Relevancy, Context Precision]
+    end
+
+    A --> B --> C
+    C --> D --> F
+    C --> E --> F
+    F --> G --> H --> I --> J
+
+    K --> L --> M
+    M --> N
+    H --> O --> N
+    J --> P --> N
+    M --> Q --> R
     J --> R
-    N --> S[Merge and Deduplicate Contexts]
+    N --> S
     R --> S
-    S --> T[Cohere Rerank]
-    T --> U[Model/Page Filtering and Fallback Logic]
-    U --> V[Context Blocks Grouped by Camera Model]
-    V --> W[Gemini Answer Generation]
-    W --> X[Answer Verification and Refinement]
-    X --> Y[Final Answer with Retrieved Evidence]
-    Y --> Z[RAGAS Evaluation]
+    S --> T --> U
+
+    U --> V --> W --> X --> Y --> Z
 ```
 
 ### Pipeline Tools and Design Considerations
