@@ -1,6 +1,12 @@
 # Evaluation Summary
 
-The system was tested on 13 camera-operation questions across multiple camera models and evaluated with RAGAS.
+The system was tested on 13 camera-operation questions across multiple camera models and evaluated with RAGAS. This evaluation used a reference-free setup: each record contained the user question, retrieved manual contexts, and generated response, but no ground-truth reference answer.
+
+## RAGAS Metric Definitions
+
+- **Faithfulness:** Measures whether the generated answer is supported by the retrieved contexts. A lower score suggests that parts of the answer may not be fully grounded in the manual excerpts.
+- **Answer Relevancy:** Measures how well the generated answer addresses the user's question. A high score means the response is on-topic and useful for the query.
+- **Context Precision Without Reference:** Measures whether the retrieved contexts are relevant to the user's question without requiring a ground-truth answer. This is suitable when there is no manually written reference answer for each question.
 
 ## Overall RAGAS Scores
 
