@@ -19,6 +19,10 @@ Camera manuals are long, technical, and difficult to search when users need a sp
 - Generates final answers with Gemini 2.0 Flash.
 - Evaluates the RAG pipeline using RAGAS metrics.
 
+## Pipeline Diagram
+
+See the full visual workflow and design rationale in [`docs/rag_pipeline_diagram.md`](docs/rag_pipeline_diagram.md).
+
 ## Tech Stack
 
 - Python
@@ -51,7 +55,8 @@ camera-manual-rag-system/
 └── docs/
     ├── github_publish_checklist.md
     ├── github_repository_setup.md
-    └── notion_portfolio_copy.md
+    ├── notion_portfolio_copy.md
+    └── rag_pipeline_diagram.md
 ```
 
 ## Notebook Versions
