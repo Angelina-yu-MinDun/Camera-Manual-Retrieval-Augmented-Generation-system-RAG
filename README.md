@@ -164,7 +164,3 @@ The RAG system was evaluated with RAGAS on 13 camera-operation questions.
 This portfolio copy does not include the generated Chroma vector database because it is large and can be rebuilt from the notebook. The original manual PDFs should only be published if their redistribution rights are confirmed. A safer GitHub approach is to describe the data source and provide instructions for users to place manuals in a local `data/raw/` folder.
 
 API keys should never be committed. Use environment variables or Colab secrets for `GEMINI_API_KEY`, `COHERE_API_KEY`, and `OPENAI_API_KEY`.
-
-## Portfolio Summary
-
-Built an end-to-end RAG pipeline for technical camera manuals, combining OCR, semantic chunking, dense vector search, BM25 retrieval, HyDE query expansion, reranking, Gemini answer generation, and RAGAS evaluation. The system achieved strong retrieval and answer relevance while surfacing key limitations around visual symbols and multimodal manual understanding.
